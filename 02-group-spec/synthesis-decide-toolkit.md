@@ -1,85 +1,83 @@
-# Toolkit — Từ Evidence Đến Build Slice
+# Synthesis - Tu Evidence Den Build Slice
 
-Dùng sau khi nhóm đã có evidence. Mục tiêu là chốt một build slice đủ nhỏ cho Day 06.
+Dung sau khi nhom da co evidence. Muc tieu la chot mot build slice du nho cho Day 06.
 
-## 1. Gom evidence thành cụm
+## 1. Gom evidence thanh cum
 
-Gom theo **workflow/pain**, không gom theo tên feature.
+Gom theo workflow/pain, khong gom theo ten feature.
 
-Ví dụ cụm tốt:
+| Cum evidence | Evidence | Product implication |
+|---|---|---|
+| Khong biet allowance nao ap dung cho booking cua minh | BBB complaint: app check-in khong hien baggage allowance included, user mua them prepaid bag | Prototype phai lay booking/fare context truoc khi khuyen nghi mua them. |
+| Thieu thong tin hanh dong duoc trong app/support | Trustpilot review noi app mat thoi gian, khong hieu qua, kho lien he support | Output phai ngan, ro buoc tiep theo, co nut chuyen agent. |
+| Chatbot duoc ky vong xu ly FAQ quy mo lon | Spirit Vietnam Airlines noi chatbot xu ly hanh ly, check-in, hoan/doi ve | AI phu hop cho task lap lai, nhung chi nen augment quyet dinh cua user. |
+| Workflow co lien quan den tien va refund | App Store version history co refund/request baggage; complaint ve prepaid baggage | Can failure path va correction path, khong chi happy path. |
 
-- "Không biết chọn chuyên khoa"
-- "Không hiểu vì sao bị tính phí"
-- "Muốn sửa output nhưng không có chỗ sửa"
-- "Bot trả lời tự tin nhưng không dẫn nguồn"
-
-## 2. Viết insight
-
-Form:
+## 2. Viet insight
 
 ```text
-User [segment] không chỉ cần [surface need].
-Họ thật ra cần [deeper need],
-vì [evidence pattern].
+Hanh khach da mua ve khong chi can doc chinh sach hanh ly.
+Ho that ra can biet "ve cua toi da bao gom gi va toi co dang sap mua trung khong",
+vi evidence cho thay app/support co the khong lam ro allowance theo booking, dan den quyet dinh mua them sai va kho recover.
 ```
 
-Ví dụ:
+## 3. Viet opportunity
 
 ```text
-Người lần đầu đi khám không chỉ cần danh sách chuyên khoa.
-Họ cần hỗ trợ ra quyết định an toàn,
-vì nhiều review/observation cho thấy họ không biết triệu chứng của mình nên đi khoa nào.
+Co hoi la dung AI de augment quyet dinh mua hanh ly them,
+giup hanh khach hieu allowance hien co va buoc tiep theo,
+trong khi van kiem soat rui ro bang cach khong tu ket luan khi thieu booking context, dan nguon, va chuyen agent voi case tien/refund.
 ```
 
-## 3. Viết opportunity
+## 4. Chon build slice
 
-Form:
+Build slice:
 
 ```text
-Cơ hội là dùng AI để [augment/automate hành động hẹp],
-giúp user [kết quả],
-trong khi vẫn kiểm soát [failure/risk].
+Cho hanh khach pho thong da mua ve Vietnam Airlines va dang check-in/mua them hanh ly,
+prototype dung AI de hoi 3 thong tin toi thieu, giai thich allowance theo booking gia lap,
+tao ra khuyen nghi "khong can mua / nen mua them / can agent kiem tra",
+va xu ly failure "app/AI lam user mua trung prepaid baggage" bang canh bao mua trung + nut chuyen agent/review.
 ```
 
-## 4. Chọn build slice
+Kiem tra 5 cau hoi:
 
-Build slice tốt phải qua 5 câu hỏi:
+| Cau hoi | Dat chua? | Ghi chu |
+|---|---|---|
+| User cu the chua? | Dat | Hanh khach da mua ve, dang check-in hoac can mua them hanh ly. |
+| Task du hep chua? | Dat | Chi xu ly mot cau hoi: co can mua them hanh ly khong. |
+| AI decision ro chua? | Dat | AI giai thich allowance va dua khuyen nghi co/khong/can agent. |
+| Failure path ro chua? | Dat | AI/app khong nhan ra allowance included -> user mua trung prepaid baggage. |
+| Co evidence khong? | Dat | BBB, Trustpilot, App Store, Spirit Vietnam Airlines. |
 
-| Câu hỏi | Đạt khi |
+## 5. Quyet dinh: giu, giam scope, hay doi huong?
+
+| Tinh huong | Quyet dinh cua nhom |
 |---|---|
-| User cụ thể chưa? | Nói được ai dùng, trong bối cảnh nào. |
-| Task đủ hẹp chưa? | Demo được trong 3-5 phút. |
-| AI decision rõ chưa? | AI gợi ý/tự làm một việc cụ thể. |
-| Failure path rõ chưa? | Có một case AI không chắc hoặc sai để test. |
-| Có evidence không? | Có bằng chứng từ self-use/review/user/competitor. |
+| Evidence yeu, user mo ho | Khong xay ra. Evidence du de chot pain ve baggage allowance. |
+| Y tuong qua rong | Da giam scope tu "AI airline assistant" xuong "baggage allowance checker". |
+| AI khong can thiet | AI co ich de dien giai policy theo ngon ngu user, nhung du lieu booking trong prototype se mock/rule-based. |
+| Rui ro cao | Chon augmentation: AI goi y, user quyet cuoi, case mo ho chuyen agent. |
+| Khong demo duoc trong 1 ngay | Backlog cac tinh nang tich hop booking thật/payment thật/refund thật. |
 
-## 5. Quyết định: giữ, giảm scope, hay đổi hướng?
-
-| Tình huống | Quyết định |
-|---|---|
-| Evidence yếu, user mơ hồ | Dừng build sâu; quay lại research 20 phút. |
-| Ý tưởng quá rộng | Giữ domain, cắt xuống một flow. |
-| AI không cần thiết | Dùng rule/manual prototype; ghi rõ vì sao không dùng AI sâu. |
-| Rủi ro cao | Chọn augmentation hoặc conditional automation. |
-| Không demo được trong 1 ngày | Đưa phần lớn vào backlog, giữ một path nhỏ. |
-
-## 6. Câu chốt cuối
-
-Điền câu này trước khi rời lớp:
+## 6. Cau chot cuoi
 
 ```text
-Dựa trên [evidence],
-nhóm sẽ build [prototype slice],
-cho [user],
-để giải quyết [pain],
-bằng cách AI [augment/automate task],
-và sẽ test failure path [failure mode].
+Dua tren evidence tu BBB, Trustpilot, App Store va thong tin Vietnam Airlines ve NEO,
+nhom se build prototype slice "AI baggage allowance checker",
+cho hanh khach da mua ve Vietnam Airlines,
+de giai quyet pain khong biet ve cua minh da co hanh ly hay can mua them,
+bang cach AI hoi context, giai thich allowance va canh bao mua trung,
+va se test failure path "AI/app lam user mua trung prepaid baggage".
 ```
 
 ## 7. Backlog
 
-Những thứ **không build trong Day 06**:
+Nhung thu khong build trong Day 06:
 
-- 
-- 
-- 
+- Tich hop API booking/PNR that cua Vietnam Airlines.
+- Thanh toan mua hanh ly that.
+- Tao refund request that.
+- Luu correction vao CRM/knowledge base that.
+- Ho tro tat ca hang ve, chang bay quoc te, partner airlines va codeshare.
+- Da ngon ngu day du Viet/Anh/Han/Nhat.
